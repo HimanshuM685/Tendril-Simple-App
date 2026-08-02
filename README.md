@@ -26,7 +26,7 @@ testnet dispenser. An address that has not opted in fails at simulation with
   1  market   list online nodes
   2  topup    buy credit
   3  rent     open a session
-  4  run      execute a job on the lease
+  4  run      execute a job (lease or one-shot)
   5  status   poll the lease
   6  release  stop the meter and bill
   q  quit

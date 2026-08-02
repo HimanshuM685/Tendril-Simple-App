@@ -206,7 +206,7 @@ async function rent(rl) {
   const sshPubKey = defaultSshKey();
   if (!sshPubKey) console.log("  ! no ~/.ssh/id_ed25519.pub — SSH login impossible, run still works");
 
-  const lease = await paid(`${API}/rent/${node.id}`, {
+  const lease = await paid(`${API}/x402/rent?nodeId=${node.id}`, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(sshPubKey ? { sshPubKey } : {}),
@@ -219,19 +219,25 @@ async function rent(rl) {
 }
 
 async function run(rl) {
-  if (!state.lease) throw new Error("no active lease — rent first");
   const payload = (await rl.question("  payload [print(sum(range(100)))]: ")).trim() ||
     "print(sum(range(100)))";
-  const r = await paid(`${API}/lease/${state.lease.leaseId}/run`, {
+  const headers = { "content-type": "application/json" };
+  if (state.lease) {
+    headers.authorization = `Bearer ${state.lease.leaseToken}`;
+  } else {
+    console.log("  (no active lease — executing one-shot run)");
+  }
+  const r = await paid(`${API}/x402/run`, {
     method: "POST",
-    headers: {
-      "content-type": "application/json",
-      authorization: `Bearer ${state.lease.leaseToken}`,
-    },
+    headers,
     body: JSON.stringify({ payload }),
   });
   console.log(`  job ${r.jobId} ok=${r.ok}`);
   console.log(String(r.result).replace(/^/gm, "  | "));
+  if (r.execution) {
+    state.balance = r.execution.balance;
+    console.log(`  node ${r.execution.nodeId}, ${r.execution.seconds}s, cost ${usd(r.execution.costAtomic)}`);
+  }
 }
 
 async function status() {
@@ -263,7 +269,7 @@ const MENU = [
   ["1", "market", "list online nodes", listNodes, false],
   ["2", "topup", "buy credit", topup, true],
   ["3", "rent", "open a session", rent, true],
-  ["4", "run", "execute a job on the lease", run, true],
+  ["4", "run", "execute a job (lease or one-shot)", run, true],
   ["5", "status", "poll the lease", status, false],
   ["6", "release", "stop the meter and bill", release, false],
 ];
