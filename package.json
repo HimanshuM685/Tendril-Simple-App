@@ -3,15 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=26.4.0"
+  },
   "scripts": {
     "keygen": "node src/index.mjs keygen",
-    "start": "node --env-file-if-exists=.env src/index.mjs",
-    "test": "node src/index.mjs selftest"
+    "start": "node --env-file-if-exists=.env --import tsx src/cli.tsx",
+    "test": "node src/index.mjs selftest && node scripts/node26.mjs --import tsx --test src/tui/render.test.tsx"
   },
   "dependencies": {
+    "@opentui/core": "^0.5.13",
+    "@opentui/react": "^0.5.13",
     "@x402/avm": "^2.20.0",
     "@x402/core": "^2.20.0",
     "@x402/fetch": "^2.20.0",
-    "algosdk": "^3.6.0"
+    "algosdk": "^3.6.0",
+    "react": "^19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "@types/react": "^19.3.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
   }
 }

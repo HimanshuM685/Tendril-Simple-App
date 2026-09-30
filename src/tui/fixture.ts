@@ -1,0 +1,58 @@
+import type { View } from "./types.js";
+
+/** Offline snapshot for layout tests. No key, so topup stays locked. */
+export const fixture: View = {
+  api: "http://localhost:4000",
+  address: "ALGORANDADDRESS1234567890ABCD",
+  balance: 12_500_000,
+  network: "algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=",
+  networkName: "testnet",
+  asset: { symbol: "USDC", id: 10458941 },
+  hasPay: false,
+  signInError: null,
+  lease: null,
+  leaseView: null,
+  openedAt: null,
+  nodes: [
+    {
+      id: "node-alpha",
+      status: "online",
+      pricePerHourUsd: 0.04,
+      cpuCores: 4,
+      ramMb: 8192,
+      label: "small",
+    },
+    {
+      id: "node-beta",
+      status: "online",
+      pricePerHourUsd: 0.12,
+      cpuCores: 8,
+      ramMb: 16384,
+      gpu: "4090",
+      payoutBlocked: true,
+    },
+  ],
+  wallet: {
+    address: "ALGORANDADDRESS1234567890ABCD",
+    balanceAtomic: 12_500_000,
+    stats: {
+      totalSpentAtomic: 2_000_000,
+      totalToppedUpAtomic: 20_000_000,
+      totalEarnedAtomic: 500_000,
+      payoutCount: 1,
+      leaseCount: 3,
+      totalLeaseSeconds: 5400,
+    },
+    topups: [{}, {}],
+    charges: [{}],
+    payouts: [{}],
+  },
+  sshWarning: null,
+  loading: false,
+  pending: false,
+  error: null,
+  notice: null,
+  lastTx: null,
+  lastRun: null,
+  lastBill: null,
+};
