@@ -107,6 +107,14 @@ export function Market({
             focused={focused}
             showDescription={false}
             selectedIndex={selected}
+            backgroundColor={theme.panel}
+            textColor={theme.text}
+            focusedBackgroundColor={theme.panel}
+            focusedTextColor={theme.cyan}
+            selectedBackgroundColor="#173d24"
+            selectedTextColor={theme.cyan}
+            descriptionColor={theme.dim}
+            selectedDescriptionColor={theme.amber}
             style={{ flexGrow: 1 }}
             options={nodes.map((item) => ({
               name: nodeLine(item),
@@ -253,6 +261,10 @@ export function Wallet({
             value={amount}
             placeholder="0.5"
             focused={field}
+            backgroundColor={theme.bg}
+            textColor={theme.cyan}
+            focusedTextColor={theme.cyan}
+            placeholderColor={theme.dim}
             onInput={onAmount}
             onSubmit={(value) => {
               if (typeof value === "string") onSubmit(value);
@@ -294,6 +306,10 @@ export function Run({
             value={payload}
             placeholder={DEFAULT_PAYLOAD}
             focused={field}
+            backgroundColor={theme.bg}
+            textColor={theme.cyan}
+            focusedTextColor={theme.cyan}
+            placeholderColor={theme.dim}
             onInput={onPayload}
             onSubmit={(value) => {
               if (typeof value === "string") onSubmit(value);
